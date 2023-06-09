@@ -1,8 +1,8 @@
-const APIkey = "44c0ceeaad2f13d35c6b6f46923f9c42";
-let city = document.querySelector("#city").value;
-let lat, lon;
-
-// variables for html elements
+// created variables for my API key, city, latitude and longitude, so when the user search a specific city or state, the API will return the weather data for that city
+var APIkey = "3f09255387b8321273840e778202a2e2"
+var city = document.querySelector("#city").value;
+var lat, lon;
+// declared variables for my elements
 var weatherEl = document.getElementById("weather");
 var fiveDayforecast1El = document.getElementById("fivedayforecast1");
 var fiveDayforecast2El = document.getElementById("fivedayforecast2");
@@ -17,9 +17,9 @@ var cityURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limi
 var queryURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey;
 var getweatherbtn = document.querySelector("#getweatherbtn");
 
+// local storage for the favorites
 getCities();
 
-// function to get lat and lon from city name
 function getCity(cityURL) {
     fetch(cityURL)
     .then(function(response) {
@@ -31,18 +31,16 @@ function getCity(cityURL) {
         lon = data[0].lon;
         console.log(lat);
         console.log(lon);
+        // using lat and lon to get weather data
         getWeather("https://api.openweathermap.org/data/2.5/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIkey)
     });
 }
 
-
-// function to get weather forcast data
 function getWeather(queryURL) {
     fetch(queryURL)
       .then(function (response) {
         return response.json();
       })
-      // created variables for city name/date/weather icon/temperature humidity/wind speed
       .then(function (data) {
         var cityname = data.city.name;
         var date = data.list[0].dt_txt; 
@@ -62,8 +60,6 @@ function getWeather(queryURL) {
         console.log(temperature);
         console.log(humidity);
         console.log(windspeed);
-
-        // created elements to display the data on the page
         var searchedcity = document.createElement("h2");
         searchedcity.textContent = cityname + " " + date;
         weatherEl.appendChild(searchedcity);
@@ -81,8 +77,6 @@ function getWeather(queryURL) {
         windspeedEl.textContent = "Wind Speed: " + windspeed + " MPH";
         weatherEl.appendChild(windspeedEl);
         weatherEl.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(102, 193, 242); border-radius: 10px;");
-        // created variables for the 5 day forecast
-        // day 1
         var date1 = data.list[7].dt_txt;
         date1 = date1.split(" ");
         date1 = date1[0];
@@ -111,8 +105,6 @@ function getWeather(queryURL) {
         fiveDayforecast1El.appendChild(windspeed1El);
         fiveDayforecast1El.setAttribute("class", "card col-2");
         fiveDayforecast1El.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(133, 183, 138); border-radius: 10px;");
-      
-        // day 2
         var date2 = data.list[15].dt_txt;
         date2 = date2.split(" ");
         date2 = date2[0];
@@ -142,7 +134,7 @@ function getWeather(queryURL) {
         fiveDayforecast2El.setAttribute("class", "card col-2");
         fiveDayforecast2El.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(133, 183, 138); border-radius: 10px;");
   
-        // day 3
+        // dAY 3
         var date3 = data.list[23].dt_txt;
         date3 = date3.split(" ");
         date3 = date3[0];
@@ -172,7 +164,7 @@ function getWeather(queryURL) {
         fiveDayforecast3El.setAttribute("class", "card col-2");
         fiveDayforecast3El.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(133, 183, 138); border-radius: 10px;");
        
-        // day 4
+        //DAY 4
         var date4 = data.list[31].dt_txt;
         date4 = date4.split(" ");
         date4 = date4[0];
@@ -202,7 +194,7 @@ function getWeather(queryURL) {
         fiveDayforecast4El.setAttribute("class", "card col-2");
         fiveDayforecast4El.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(133, 183, 138); border-radius: 10px;");
 
-        // day 5
+        //DAY 5
         var date5 = data.list[39].dt_txt;
         date5 = date5.split(" ");
         date5 = date5[0];
@@ -213,6 +205,7 @@ function getWeather(queryURL) {
         var humidity5 = data.list[39].main.humidity;
         var windspeed5 = data.list[39].wind.speed;
         windspeed5 = Math.round(windspeed5);
+        // created elements to display the data on the page for the 5 day forecast for day 5
         var date5El = document.createElement("h3");
         date5El.textContent = date5;
         fiveDayforecast5El.appendChild(date5El);
@@ -233,14 +226,13 @@ function getWeather(queryURL) {
         fiveDayforecast5El.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(133, 183, 138); border-radius: 10px;");
     });
 }   
-// event listener for search button
+// search button
 getweatherbtn.addEventListener("click", function(event) {
     event.preventDefault();
     var city = document.querySelector("#city").value;
     var  cityURL = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&limit=1&appid=" + APIkey;
     console.log(city);
     getCity(cityURL);
-    // element to display city name in favorites 
     var cityEl = document.createElement("button");
     cityEl.textContent = city;
     cityEl.setAttribute("class", "btn btn-primary");
@@ -251,12 +243,13 @@ getweatherbtn.addEventListener("click", function(event) {
     favoritesEl.appendChild(cityEl);
     saveCity(city);
 });
-// funtion to save city to local storage
+// SAVING CITY TO LOCAL STORAGE
 function saveCity(city) {
     var cities = JSON.parse(localStorage.getItem("cities")) || [];
     cities.push(city);
     localStorage.setItem("cities", JSON.stringify(cities));
   } 
+// GETTING CITY FROM LOCAL STORAGE`
 function getCities() {
     var cities = JSON.parse(localStorage.getItem("cities")) || [];
     for (var i = 0; i < cities.length; i++) {
@@ -269,6 +262,7 @@ function getCities() {
         cityEl.setAttribute("type", "button");
         cityEl.setAttribute("data-city", city);
         favoritesEl.appendChild(cityEl);
+        // CITY BUTTONS
         cityEl.addEventListener("click", function(event) {
             event.preventDefault();
             var city = event.target.getAttribute("data-city");
@@ -280,15 +274,16 @@ function getCities() {
     }
 }
 
-// function to clear local the storage
+// CLEARING FAVORITES
 function clearFavorites() {
     localStorage.clear();
     favoritesEl.innerHTML = "";
 }
 
-// event listener for clear favorites button
+// CLEAR FAVORITES BUTTON
 clearfavoritesbtn.addEventListener("click", function(event) {
     event.preventDefault();
     clearFavorites();
 }
 );
+

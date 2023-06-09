@@ -1,0 +1,13 @@
+h1 {
+    color: rgb(25, 194, 206);
+    font-size: 40px;
+    font-weight: bold;
+    text-align: center;
+    padding-top: 30px;
+}
+
+.weathercontainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
