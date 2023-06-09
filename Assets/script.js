@@ -3,14 +3,16 @@ let city = document.querySelector("#city").value;
 let lat, lon;
 
 // variables for html elements
-const weatherEl = document.getElementById("weather");
-const fiveDayforecastEl = document.querySelectorAll(".fivedayforecast");
-const favoritesEl = document.getElementById("favorites");
-const weathercontainerEl = document.getElementsByClassName("weathercontainer")[0];
-const clearhistorybtn = document.querySelector("#clearhistorybtn");
-const clearfavoritesbtn = document.querySelector("#clearfavoritesbtn");
-const getweatherbtn = document.querySelector("#getweatherbtn");
-
+var weatherEl = document.getElementById("weather");
+var fiveDayforecast1El = document.getElementById("fivedayforecast1");
+var fiveDayforecast2El = document.getElementById("fivedayforecast2");
+var fiveDayforecast3El = document.getElementById("fivedayforecast3");
+var fiveDayforecast4El = document.getElementById("fivedayforecast4");
+var fiveDayforecast5El = document.getElementById("fivedayforecast5");
+var favoritesEl = document.getElementById("favorites");
+var weathercontainerEl = document.getElementsByClassName("weathercontainer");
+var clearhistorybtn = document.querySelector("#clearhistorybtn");
+var clearfavoritesbtn = document.querySelector("#clearfavoritesbtn");
 getCities();
 
 fuction getCity(cityURL) {
