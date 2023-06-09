@@ -1,4 +1,3 @@
-// created variables for my API key, city, latitude and longitude, so when the user search a specific city or state, the API will return the weather data for that city
 var APIkey = "3f09255387b8321273840e778202a2e2"
 var city = document.querySelector("#city").value;
 var lat, lon;
@@ -77,6 +76,8 @@ function getWeather(queryURL) {
         windspeedEl.textContent = "Wind Speed: " + windspeed + " MPH";
         weatherEl.appendChild(windspeedEl);
         weatherEl.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(102, 193, 242); border-radius: 10px;");
+        
+        // day 1 of 5 day forecast
         var date1 = data.list[7].dt_txt;
         date1 = date1.split(" ");
         date1 = date1[0];
@@ -105,6 +106,9 @@ function getWeather(queryURL) {
         fiveDayforecast1El.appendChild(windspeed1El);
         fiveDayforecast1El.setAttribute("class", "card col-2");
         fiveDayforecast1El.setAttribute("style", "border: 1px solid black; padding: 10px; margin: 10px; background-color: rgb(133, 183, 138); border-radius: 10px;");
+        
+        // day 2
+        
         var date2 = data.list[15].dt_txt;
         date2 = date2.split(" ");
         date2 = date2[0];
@@ -205,7 +209,6 @@ function getWeather(queryURL) {
         var humidity5 = data.list[39].main.humidity;
         var windspeed5 = data.list[39].wind.speed;
         windspeed5 = Math.round(windspeed5);
-        // created elements to display the data on the page for the 5 day forecast for day 5
         var date5El = document.createElement("h3");
         date5El.textContent = date5;
         fiveDayforecast5El.appendChild(date5El);
